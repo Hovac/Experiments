@@ -1,0 +1,31 @@
+.resultBox {
+    height: 80px;
+    width: 350px;;
+    font-size: 50px;
+    text-align: right;
+}
+
+.result {
+    width: 100%;
+    height: 107px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 50px;
+}
+
+.numbers {
+    display: flex;
+    justify-content: center;
+    background-color: yellow;
+    font-size: 50px;
+}
+
+.buttons {
+    background-color: blue;
+}
+
+button {
+    margin: 10px;
+    height: 72px;
+    width: 72px;
+}
