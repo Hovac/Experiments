@@ -1,6 +1,21 @@
 var symbolSize = 26;
 var fadeInterval = 1.6;
 var streams = [];
+var redValue = 0;
+var greenValue = 255;
+var blueValue = 50;
+var speedValue = 9;
+var opacity
+
+window.addEventListener("input", function () {
+    redValue = document.getElementById("Red").value;
+    greenValue = document.getElementById("Green").value;
+    blueValue = document.getElementById("Blue").value;
+});
+
+function windowResized() {
+    resizeCanvas(windowWidth, window.innerHeight);
+}
 
 function setup() {
     createCanvas(
@@ -35,12 +50,12 @@ function Symbol(x, y, speed, first, opacity) {
     this.x = x;
     this.y = y;
     this.value;
-
     this.speed = speed;
+
     this.first = first;
     this.opacity = opacity;
 
-    this.switchInterval = round(random(2, 25));
+    this.switchInterval = round(random(5, 30));
 
     this.setToRandomSymbol = function () {
         var charType = round(random(0, 5));
@@ -60,6 +75,7 @@ function Symbol(x, y, speed, first, opacity) {
     this.rain = function () {
         if (this.y >= height) {
             this.y = 0;
+
         }
         else {
             this.y += this.speed;
@@ -70,7 +86,8 @@ function Symbol(x, y, speed, first, opacity) {
 function Stream() {
     this.symbols = [];
     this.totalSymbols = round(random(5, 35));
-    this.speed = random(3, 15);
+
+    this.speed = random(speedValue * 0.33, speedValue * 1.2);
 
     this.generateSymbols = function (x, y) {
         var opacity = 255;
@@ -80,7 +97,7 @@ function Stream() {
             symbol = new Symbol(x, y, this.speed, first, opacity);
             symbol.setToRandomSymbol();
             this.symbols.push(symbol);
-            opacity -= (255/ this.totalSymbols) / fadeInterval;
+            opacity -= (255 / this.totalSymbols) / fadeInterval;
             y -= symbolSize;
             first = false;
         }
@@ -90,10 +107,10 @@ function Stream() {
     this.render = function () {
         this.symbols.forEach(function (symbol) {
             if (symbol.first) {
-                fill(180, 255, 180, symbol.opacity);
+                fill(redValue+150, greenValue+50, blueValue+100, symbol.opacity);
             }
             else {
-                fill(0, 255, 50, symbol.opacity);
+                fill(redValue, greenValue, blueValue, symbol.opacity);
             }
             text(symbol.value, symbol.x, symbol.y);
             symbol.rain();
