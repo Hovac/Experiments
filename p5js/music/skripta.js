@@ -6,11 +6,11 @@ var volSlider;
 var loopCheckElement;
 var loopCheckValue = true;
 var loadMessage;
-
+var volSliderTooltip;
 // self explanatory, loads first music and sets global variable music
 function preload() {
     soundFormats('mp3');
-    music = loadSound('kung.mp3');
+    music = loadSound('shortSound.mp3');
 }
 
 function setup() {
@@ -32,6 +32,14 @@ function setup() {
     loopCheckElement.removeClass('fa-check');
     loopCheckElement.addClass('fa-check');
     music.setLoop(true);
+
+    volSliderTooltip.removeClass('hideTooltip');
+    volSliderTooltip.removeClass('showTooltip');
+    volSliderTooltip.addClass('hideTooltip');
+
+    volSlider.mouseOver(tooltipsCreate);
+    volSlider.mouseOut(tooltipsDelete);
+
 }
 
 function draw() {
@@ -46,6 +54,8 @@ function draw() {
 
     //checking if music file is loaded
     checkLoad();
+
+    musicDuration();
 
     /*     visuals();
      */
@@ -67,6 +77,30 @@ function draw() {
 
 }
 
+function musicDuration() {
+    var songDuration = map(music.duration(), 0, music.duration(), 0, 300);
+    var currentTime = map(music.currentTime(), 0, music.duration(), music.currentTime(), 300);
+
+    var minuteCurrentTime = floor(music.currentTime()/60);
+    var secondsCurrentTime = floor(music.currentTime()%60);
+
+    var durationMinutes = floor(music.duration()/60);
+    var durationSeconds = floor(music.duration()%60);
+
+    strokeWeight(0);
+    fill(0, 100, 100);
+    textSize(16);
+    text(minuteCurrentTime + '.' + secondsCurrentTime + ' / ' + durationMinutes + '.' + durationSeconds, 750, 78);
+
+    strokeWeight(4 + amp.getLevel()*15);
+    stroke(0, 100, 100);
+    line(400, 75, 400 + songDuration, 75);
+
+    strokeWeight(8 + amp.getLevel()*12);
+    stroke(140, 100, 100);
+    line(400, 75, 400 + currentTime, 75);
+}
+
 function checkLoad() {
     if (music.isLoaded()) {
         playB.show();
@@ -74,7 +108,7 @@ function checkLoad() {
         loadMessage.hide();
     }
     else {
-        fill(360, 50, 30);
+        fill(frameCount % 360, 50, 30);
         rect(0, 0, width, height);
         playB.hide();
         stopB.hide();
@@ -179,7 +213,7 @@ function createElements() {
 
     playB.position(30, 50);
     stopB.position(100, 50);
-    loadMessage.position(width / 2, height / 2);
+    loadMessage.center();
 
     playB.mousePressed(playPauseMusic);
     stopB.mousePressed(stopMusic);
@@ -187,17 +221,36 @@ function createElements() {
     volSlider = createSlider(0, 1, 0.5, 0.01);
     volSlider.position(180, 65);
 
+    volSliderTooltip = createSpan('Volume');
+    volSliderTooltip.id('volSliderTooltip');
+    volSliderTooltip.position(213, 100);
+
     loopCheckElement = createDiv();
     loopCheckElement.addClass('fas fa-times fa-3x');
     loopCheckElement.position(330, 50);
+
+
+}
+
+function tooltipsCreate() {
+    volSliderTooltip.removeClass('hideTooltip');
+    volSliderTooltip.removeClass('showTooltip');
+    volSliderTooltip.addClass('showTooltip');
+}
+
+function tooltipsDelete() {
+    volSliderTooltip.removeClass('hideTooltip');
+    volSliderTooltip.removeClass('showTooltip');
+    volSliderTooltip.addClass('hideTooltip');
+
 }
 
 //  make sure that canvas is always 100% of the user browser window
 window.onresize = function () {
     resizeCanvas(document.body.clientWidth, windowHeight);
-    playB.position((width / 2), 50);
-    stopB.position((width / 2), 100);
-    volSlider.position((width / 2), 150);
-    loopCheckElement.position(width / 2, 200);
-    loadMessage.position(width / 2, height / 2);
+    playB.position(30, 50);
+    stopB.position(100, 50);
+    volSlider.position(180, 65);
+    loopCheckElement.position(330, 50);
+    loadMessage.center();
 };
