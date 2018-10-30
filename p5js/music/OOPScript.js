@@ -1,18 +1,5 @@
 var music;
-var playB;
-var stopB;
-var fw;
-var bw;
-var nextSong;
-var prevSong;
-var loopCheckTooltip;
-var loopCheckValue = true;
 
-var sensitivity;
-var sensitivitySlider;
-var volSlider;
-var volSliderTooltip;
-var loopCheckElement;
 
 var loadMessage;
 var dropZone;
@@ -36,13 +23,18 @@ function setup() {
     dropZone.drop(gotFile);
 
     // creates and positions the buttons
-    createElements();
+/*     createElements();
+ */
 
-    volSlider.class('sliderLook purple');
-    volSlider.input(volSliderValues);
+    domEl = new DOMElements();
+    domEl.positionElements();
+    domEl.controls();
 
-    loopCheckElement.mousePressed(loopingCheck);
-    loopCheckTooltip.mousePressed(loopingCheck);
+    domEl.volSlider.class('sliderLook purple');
+    domEl.volSlider.input(volSliderValues);
+
+    domEl.loopCheckElement.mousePressed(loopingCheck);
+    domEl.loopCheckTooltip.mousePressed(loopingCheck);
 
 
     //initializing objects to be used
@@ -61,6 +53,60 @@ function draw() {
     visuals();
     musicDuration();
 }
+
+class DOMElements {
+    constructor() {
+        this.playB = createDiv();
+        this.stopB = createDiv();
+        this.fw = createDiv();
+        this.bw = createDiv();
+        this.loadMessage = createDiv();
+        this.volSlider = createSlider(0, 1, 0.5, 0.01);
+        this.volSliderTooltip = createSpan('Volume');
+        this.loopCheckElement = createDiv();
+        this.loopCheckTooltip = createSpan('Loop');
+        this.sensitivitySlider = createSlider(0, 500, 250, 10);
+
+        this.playB.class('fas fa-play fa-3x');
+        this.stopB.class('fas fa-stop fa-3x');
+        this.fw.class('fas fa-forward fa-3x');
+        this.bw.class('fas fa-backward fa-3x');
+        this.loadMessage.class('fas fa-spinner fa-pulse fa-10x');
+        this.volSlider.class("sliderLook");
+        this.volSliderTooltip.id('volSliderTooltip');
+        this.loopCheckElement.class('fas fa-3x fa-check');
+        this.loopCheckTooltip.class('loopTooltipActive');
+        this.sensitivitySlider.class('sliderLook');
+    }
+
+    positionElements() {
+        this.playB.position(100, 90);
+        this.stopB.position(260, 90);
+        this.fw.position(180, 90);
+        this.bw.position(20, 90)
+        this.loadMessage.center();
+        this.volSlider.position(20, 50);
+        this.volSliderTooltip.position(this.volSlider.width * 2 + 60, 38);
+        this.loopCheckElement.position(340, 90);
+        this.loopCheckTooltip.position(400, 100);
+        this.sensitivitySlider.position(500, 50);
+        this.volSliderTooltip.hide();
+    }
+
+    controls() {
+        this.playB.mousePressed(playPauseMusic);
+        this.stopB.mousePressed(stopMusic);
+        this.volSlider.mouseOver(tooltipCreate);
+        this.volSlider.mouseOut(tooltipDelete);
+    
+/*         this.music.setLoop(true);
+ */    }
+
+}
+
+
+
+
 
 function volSliderValues() {
 
@@ -296,44 +342,4 @@ function tooltipDelete() {
 }
 
 function createElements() {
-    playB = createDiv();
-    stopB = createDiv();
-    fw = createDiv();
-    bw = createDiv();
-    loadMessage = createDiv();
-    volSlider = createSlider(0, 1, 0.5, 0.01);
-    volSliderTooltip = createSpan('Volume');
-    loopCheckElement = createDiv();
-    loopCheckTooltip = createSpan('Loop');
-    sensitivitySlider = createSlider(0, 500, 250, 10);
-
-    playB.class('fas fa-play fa-3x');
-    stopB.class('fas fa-stop fa-3x');
-    fw.class('fas fa-forward fa-3x');
-    bw.class('fas fa-backward fa-3x');
-    loadMessage.class('fas fa-spinner fa-pulse fa-10x');
-    volSlider.class("sliderLook");
-    volSliderTooltip.id('volSliderTooltip');
-    loopCheckElement.class('fas fa-3x fa-check');
-    loopCheckTooltip.class('loopTooltipActive');
-    sensitivitySlider.class('sliderLook');
-
-    playB.position(100, 90);
-    stopB.position(260, 90);
-    fw.position(180, 90);
-    bw.position(20, 90)
-    loadMessage.center();
-    volSlider.position(20, 50);
-    volSliderTooltip.position(volSlider.width * 2 + 60, 38);
-    loopCheckElement.position(340, 90);
-    loopCheckTooltip.position(400, 100);
-    sensitivitySlider.position(500, 50);
-
-    playB.mousePressed(playPauseMusic);
-    stopB.mousePressed(stopMusic);
-    volSlider.mouseOver(tooltipCreate);
-    volSlider.mouseOut(tooltipDelete);
-
-    volSliderTooltip.hide();
-    music.setLoop(true);
 }

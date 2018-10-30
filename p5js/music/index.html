@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Equalizer</title>
+    <link href="https://fonts.googleapis.com/css?family=ABeeZee" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
         crossorigin="anonymous">
     <link href="styling.css">
@@ -14,25 +15,146 @@
     <script src="p5/p5.dom.min.js"></script>
     <script src="p5/p5.sound.min.js"></script>
     <script src="skripta.js"></script>
-<!--     <script src="testNewFeatures.js"></script>
- -->
+    <!-- <script src="testNewFeatures.js"></script> -->
+
     <style>
         * {
             margin: 0;
             padding: 0;
             overflow: hidden;
+            font-family: 'ABeeZee', sans-serif;
         }
+
+        .fas {
+            color: #bf3048;
+        }
+
+        /*background-color: #1d1c25;*/
 
         #volSliderTooltip {
-            font-size: 20px;
+            font-size: 25px;
+            color: rgb(48, 191, 96);
         }
 
-        .hideTooltip {
-            visibility: hidden !important;
+        .loopTooltipActive {
+            font-size: 25px;
+            color: rgb(48, 191, 96);
+
         }
 
-        .showTooltip {
-            visibility: visible !important;
+        .loopTooltipNotActive {
+            font-size: 25px;
+            color: rgb(191, 67, 67);
+        }
+
+        .sliderLook {
+            width: 280px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: absolute;
+            overflow: visible;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            background: rgba(59, 173, 227, 1);
+            background: -moz-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59, 173, 227, 1)), color-stop(25%, rgba(87, 111, 230, 1)), color-stop(51%, rgba(152, 68, 183, 1)), color-stop(100%, rgba(255, 53, 127, 1)));
+            background: -webkit-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: -o-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: -ms-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
+            height: 4px;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-moz-range-track {
+            -moz-appearance: none;
+            background: rgba(59, 173, 227, 1);
+            background: -moz-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59, 173, 227, 1)), color-stop(25%, rgba(87, 111, 230, 1)), color-stop(51%, rgba(152, 68, 183, 1)), color-stop(100%, rgba(255, 53, 127, 1)));
+            background: -webkit-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: -o-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: -ms-linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            background: linear-gradient(45deg, rgba(59, 173, 227, 1) 0%, rgba(87, 111, 230, 1) 25%, rgba(152, 68, 183, 1) 51%, rgba(255, 53, 127, 1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
+            height: 4px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: 2px solid;
+            border-radius: 50%;
+            height: 25px;
+            width: 25px;
+            max-width: 80px;
+            position: relative;
+            bottom: 11px;
+            background-color: #1d1c25;
+            cursor: -webkit-grab;
+
+            -webkit-transition: border 1000ms ease;
+            transition: border 1000ms ease;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            -moz-appearance: none;
+            border: 2px solid;
+            border-radius: 50%;
+            overflow:visible;
+            height: 25px;
+            width: 25px;
+            max-width: 80px;
+            position: relative;
+            bottom: 11px;
+            background-color: #1d1c25;
+            cursor: -moz-grab;
+            -moz-transition: border 1000ms ease;
+            transition: border 1000ms ease;
+        }
+
+        .sliderLook.blue::-webkit-slider-thumb {
+            border-color: rgb(59, 173, 227);
+        }
+
+        .sliderLook.ltpurple::-webkit-slider-thumb {
+            border-color: rgb(87, 111, 230);
+        }
+
+        .sliderLook.purple::-webkit-slider-thumb {
+            border-color: rgb(152, 68, 183);
+        }
+
+        .sliderLook.pink::-webkit-slider-thumb {
+            border-color: rgb(255, 53, 127);
+        }
+
+        .sliderLook.blue::-moz-range-thumb {
+            border-color: rgb(59, 173, 227);
+        }
+
+        .sliderLook.ltpurple::-moz-range-thumb {
+            border-color: rgb(87, 111, 230);
+        }
+
+        .sliderLook.purple::-moz-range-thumb {
+            border-color: rgb(152, 68, 183);
+        }
+
+        .sliderLook.pink::-moz-range-thumb {
+            border-color: rgb(255, 53, 127);
+        }
+
+        input[type=range]::-webkit-slider-thumb:active {
+            cursor: -webkit-grabbing;
+        }
+
+        input[type=range]::-moz-range-thumb:active {
+            cursor: -moz-grabbing;
         }
     </style>
 </head>
