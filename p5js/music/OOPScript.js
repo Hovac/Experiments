@@ -79,6 +79,8 @@ class DOMElements {
         this.sensitivitySlider.class('sliderLook');
     }
 
+    
+
     positionElements() {
         this.playB.position(100, 90);
         this.stopB.position(260, 90);
