@@ -7,15 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Equalizer</title>
     <link href="https://fonts.googleapis.com/css?family=ABeeZee" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
+        integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <link href="styling.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="p5/p5.min.js"></script>
     <script src="p5/p5.dom.min.js"></script>
     <script src="p5/p5.sound.min.js"></script>
-<!--     <script src="OOPScript.js"></script>
- -->    <script src="skripta.js"></script>
 
     <style>
         * {
@@ -27,6 +25,7 @@
 
         .fas {
             color: #bf3048;
+            cursor: pointer;
         }
 
         /*background-color: #1d1c25;*/
@@ -36,15 +35,9 @@
             color: rgb(48, 191, 96);
         }
 
-        .loopTooltipActive {
-            font-size: 25px;
-            color: rgb(48, 191, 96);
-
-        }
-
-        .loopTooltipNotActive {
-            font-size: 25px;
-            color: rgb(191, 67, 67);
+        .songList {
+            font-size: 1.2rem;
+            color: firebrick;
         }
 
         .sliderLook {
@@ -105,7 +98,7 @@
             -moz-appearance: none;
             border: 2px solid;
             border-radius: 50%;
-            overflow:visible;
+            overflow: visible;
             height: 25px;
             width: 25px;
             max-width: 80px;
@@ -161,6 +154,9 @@
 
 <body>
 
+    <script src="elements.js"></script>
+    
+    <script src="skripta.js"></script>
 
 </body>
 
