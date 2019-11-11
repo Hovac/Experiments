@@ -2,6 +2,7 @@ var resultBox = document.getElementById("resultBox");
 var result = "0";
 var button = document.getElementById("one");
 var broj = 0;
+var testGit = 1;
 
 
 var brojcanik = function tipka() {
